@@ -112,4 +112,68 @@ export class LinkedList {
     string += "null";
     return string;
   }
+
+  insertAt(value, index) {
+    let arraySize = this.size();
+
+    if (index < 0 || index > arraySize) {
+      console.log("Index out of bounds");
+      return;
+    }
+
+    const newNode = new Node(value);
+
+    if (index === 0) {
+      newNode.next = this.head;
+      this.head = newNode;
+      if (arraySize === 0) {
+        this.tail = newNode;
+      }
+    } else {
+      let current = this.head;
+      let previous;
+
+      for (let i = 0; i < index; i++) {
+        previous = current;
+        current = current.next;
+      }
+
+      previous.next = newNode;
+      newNode.next = current;
+
+      if (index === arraySize) {
+        this.tail = newNode;
+      }
+    }
+  }
+
+  removeAt(index) {
+    const arraySize = this.size();
+
+    if (index < 0 || index >= arraySize) {
+      console.log("Index out of bounds");
+      return;
+    }
+
+    if (index === 0) {
+      this.head = this.head.next;
+      if (arraySize === 1) {
+        this.tail = null;
+      }
+    } else {
+      let current = this.head;
+      let previous;
+
+      for (let i = 0; i < index; i++) {
+        previous = current;
+        current = current.next;
+      }
+      
+      previous.next = current.next;
+
+      if (current === this.tail) {
+        this.tail = previous;
+      }
+    }
+  }
 }
